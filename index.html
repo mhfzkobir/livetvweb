@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live TV Website</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.5.3/video-js.min.css">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.5.3/video.min.js" defer></script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -24,17 +22,14 @@
         </div>
     </header>
 
-    <main class="grid-container" id="channels-grid">
-        <!-- Channels will be dynamically loaded here -->
-    </main>
-
-    <div id="player-modal" class="modal">
-        <div class="modal-content">
-            <span id="close-modal" class="close">&times;</span>
-            <video id="player" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="100%">
-                <source src="" type="application/x-mpegURL">
-            </video>
+    <main id="main-content">
+        <div class="grid-container" id="channels-grid">
+            <!-- Channels will be dynamically loaded here -->
         </div>
-    </div>
+        <div id="iframe-player" class="iframe-player hidden">
+            <button id="back-button" class="back-button">Back</button>
+            <iframe id="player-frame" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </main>
 </body>
 </html>

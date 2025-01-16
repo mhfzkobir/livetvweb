@@ -1,0 +1,29 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live TV Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowplayer/7.2.7/flowplayer.min.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <h1>Live TV</h1>
+        <input type="text" id="search-bar" placeholder="Search channels...">
+    </header>
+
+    <main class="grid-container" id="channels-grid">
+        <!-- Channels will be dynamically loaded here -->
+    </main>
+
+    <div id="player-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <div id="player" class="flowplayer" data-ratio="16:9"></div>
+        </div>
+    </div>
+</body>
+</html>

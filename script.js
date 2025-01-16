@@ -6,6 +6,7 @@ const categorySelect = document.getElementById("category-select");
 const playerModal = document.getElementById("player-modal");
 const closeModal = document.getElementById("close-modal");
 const darkModeToggle = document.getElementById("dark-mode");
+const videoPlayer = videojs('player');
 
 let channels = [];
 let categories = [];
@@ -72,15 +73,9 @@ function displayChannels(channels) {
         .join("");
 }
 
-// Initialize THEOplayer and show modal
+// Play channel in Video.js player
 function playChannel(url) {
-    const playerElement = document.getElementById("player");
-    const player = new THEOplayer.Player(playerElement, {
-        libraryLocation: "https://cdn.myth.theoplayer.com/theoplayer/v5/latest/",
-    });
-    player.source = {
-        sources: [{ src: url, type: "application/x-mpegurl" }],
-    };
+    videoPlayer.src({ src: url, type: 'application/x-mpegURL' });
     playerModal.style.display = "flex";
 }
 
@@ -95,6 +90,7 @@ channelsGrid.addEventListener("click", (event) => {
 
 closeModal.addEventListener("click", () => {
     playerModal.style.display = "none";
+    videoPlayer.pause();
 });
 
 searchBar.addEventListener("input", (event) => {
@@ -116,6 +112,9 @@ categorySelect.addEventListener("change", (event) => {
 
 darkModeToggle.addEventListener("change", (event) => {
     document.body.classList.toggle("dark-mode", event.target.checked);
+    document.querySelectorAll(".card").forEach((card) =>
+        card.classList.toggle("dark-mode", event.target.checked)
+    );
 });
 
 // Load playlist on page load

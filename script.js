@@ -1,11 +1,14 @@
 // script.js
-const m3uUrl = "https://freelivtva.vercel.app/playlist%20(8).m3u"; // Replace with your m3u link
+const m3uUrl = "https://sprl.in/TATATV"; // Replace with your m3u link
 const channelsGrid = document.getElementById("channels-grid");
 const searchBar = document.getElementById("search-bar");
+const categorySelect = document.getElementById("category-select");
 const playerModal = document.getElementById("player-modal");
 const closeModal = document.getElementById("close-modal");
+const darkModeToggle = document.getElementById("dark-mode");
 
 let channels = [];
+let categories = [];
 
 // Fetch and parse m3u playlist
 async function fetchPlaylist() {
@@ -13,6 +16,7 @@ async function fetchPlaylist() {
         const response = await fetch(m3uUrl);
         const playlist = await response.text();
         channels = parseM3U(playlist);
+        extractCategories();
         displayChannels(channels);
     } catch (error) {
         console.error("Error fetching playlist:", error);
@@ -25,16 +29,20 @@ function parseM3U(playlist) {
     const channelList = [];
     let channelName = "";
     let channelLogo = "";
+    let category = "Uncategorized";
     lines.forEach((line) => {
         if (line.startsWith("#EXTINF")) {
             const nameMatch = line.match(/,([^,]+)$/);
             const logoMatch = line.match(/tvg-logo="([^"]+)"/);
+            const groupMatch = line.match(/group-title="([^"]+)"/);
             channelName = nameMatch ? nameMatch[1] : "Unknown Channel";
             channelLogo = logoMatch ? logoMatch[1] : "placeholder.png";
+            category = groupMatch ? groupMatch[1] : "Uncategorized";
         } else if (line.trim() && !line.startsWith("#")) {
             channelList.push({
                 name: channelName,
                 logo: channelLogo,
+                category,
                 url: line.trim(),
             });
         }
@@ -42,12 +50,20 @@ function parseM3U(playlist) {
     return channelList;
 }
 
+// Extract unique categories from channels
+function extractCategories() {
+    categories = ["All", ...new Set(channels.map((ch) => ch.category))];
+    categorySelect.innerHTML = categories
+        .map((cat) => `<option value="${cat}">${cat}</option>`)
+        .join("");
+}
+
 // Display channels in a grid
 function displayChannels(channels) {
     channelsGrid.innerHTML = channels
         .map(
             (channel) => `
-        <div class="card" data-url="${channel.url}">
+        <div class="card" data-url="${channel.url}" data-category="${channel.category}">
             <img src="${channel.logo}" alt="${channel.name}">
             <div class="card-title">${channel.name}</div>
         </div>
@@ -56,14 +72,15 @@ function displayChannels(channels) {
         .join("");
 }
 
-// Initialize Flowplayer and show modal
+// Initialize THEOplayer and show modal
 function playChannel(url) {
     const playerElement = document.getElementById("player");
-    flowplayer(playerElement, {
-        clip: {
-            sources: [{ type: "application/x-mpegurl", src: url }],
-        },
+    const player = new THEOplayer.Player(playerElement, {
+        libraryLocation: "https://cdn.myth.theoplayer.com/theoplayer/v5/latest/",
     });
+    player.source = {
+        sources: [{ src: url, type: "application/x-mpegurl" }],
+    };
     playerModal.style.display = "flex";
 }
 
@@ -86,6 +103,19 @@ searchBar.addEventListener("input", (event) => {
         channel.name.toLowerCase().includes(searchTerm)
     );
     displayChannels(filteredChannels);
+});
+
+categorySelect.addEventListener("change", (event) => {
+    const selectedCategory = event.target.value;
+    const filteredChannels =
+        selectedCategory === "All"
+            ? channels
+            : channels.filter((channel) => channel.category === selectedCategory);
+    displayChannels(filteredChannels);
+});
+
+darkModeToggle.addEventListener("change", (event) => {
+    document.body.classList.toggle("dark-mode", event.target.checked);
 });
 
 // Load playlist on page load

@@ -1,5 +1,5 @@
 // script.js
-const m3uUrl = "https://sprl.in/TATATV"; // Replace with your m3u link
+const m3uUrl = "https://denverisalive.vercel.app/Playlist/TATA_TV6.m3u"; // Replace with your m3u link
 const channelsGrid = document.getElementById("channels-grid");
 const searchBar = document.getElementById("search-bar");
 const categorySelect = document.getElementById("category-select");

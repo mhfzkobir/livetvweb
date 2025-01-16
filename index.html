@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live TV Website</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.0/dist/hls.min.js"></script>
+    <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script> <!-- Replace with your JWPlayer key -->
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -22,14 +25,19 @@
         </div>
     </header>
 
-    <main id="main-content">
-        <div class="grid-container" id="channels-grid">
-            <!-- Channels will be dynamically loaded here -->
-        </div>
-        <div id="iframe-player" class="iframe-player hidden">
-            <button id="back-button" class="back-button">Back</button>
-            <iframe id="player-frame" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
+    <main class="grid-container" id="channels-grid">
+        <!-- Channels will be dynamically loaded here -->
     </main>
+
+    <div id="player-container">
+        <select id="player-selector" class="hidden">
+            <option value="shaka">Shaka Player</option>
+            <option value="hls">HLS.js Player</option>
+            <option value="jw">JW Player</option>
+        </select>
+        <div id="shaka-player" class="player hidden"></div>
+        <video id="hls-player" class="player hidden" controls></video>
+        <div id="jw-player" class="player hidden"></div>
+    </div>
 </body>
 </html>

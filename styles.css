@@ -23,28 +23,6 @@ body.dark-mode {
     align-items: center;
 }
 
-.header h1 {
-    margin: 0;
-}
-
-.controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-#search-bar, #category-select {
-    padding: 8px;
-    font-size: 1rem;
-}
-
-.dark-mode-toggle {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-}
-
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -56,7 +34,6 @@ body.dark-mode {
     background-color: #f4f4f4;
     border: 1px solid #ddd;
     border-radius: 8px;
-    overflow: hidden;
     cursor: pointer;
     text-align: center;
     transition: transform 0.2s, background-color 0.3s;
@@ -68,46 +45,26 @@ body.dark-mode {
     object-fit: cover;
 }
 
-.card:hover {
-    transform: scale(1.05);
+#player-container {
+    padding: 20px;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
 }
 
-.card-title {
+#player-selector {
+    margin-bottom: 20px;
     padding: 10px;
-    font-size: 1.2rem;
-    color: inherit;
+    font-size: 1rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
 }
 
 .hidden {
     display: none;
-}
-
-.iframe-player {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-color: #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.back-button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    align-self: flex-start;
-}
-
-.back-button:hover {
-    background-color: #555;
-}
-
-#iframe-player iframe {
-    flex-grow: 1;
-    width: 100%;
 }

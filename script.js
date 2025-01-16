@@ -3,10 +3,10 @@ const m3uUrl = "https://denverisalive.vercel.app/Playlist/TATA_TV6.m3u"; // Repl
 const channelsGrid = document.getElementById("channels-grid");
 const searchBar = document.getElementById("search-bar");
 const categorySelect = document.getElementById("category-select");
-const playerModal = document.getElementById("player-modal");
-const closeModal = document.getElementById("close-modal");
+const iframePlayer = document.getElementById("iframe-player");
+const backButton = document.getElementById("back-button");
+const playerFrame = document.getElementById("player-frame");
 const darkModeToggle = document.getElementById("dark-mode");
-const videoPlayer = videojs('player');
 
 let channels = [];
 let categories = [];
@@ -73,10 +73,11 @@ function displayChannels(channels) {
         .join("");
 }
 
-// Play channel in Video.js player
+// Play channel in iframe
 function playChannel(url) {
-    videoPlayer.src({ src: url, type: 'application/x-mpegURL' });
-    playerModal.style.display = "flex";
+    playerFrame.src = url;
+    iframePlayer.classList.remove("hidden");
+    channelsGrid.classList.add("hidden");
 }
 
 // Event listeners
@@ -88,9 +89,10 @@ channelsGrid.addEventListener("click", (event) => {
     }
 });
 
-closeModal.addEventListener("click", () => {
-    playerModal.style.display = "none";
-    videoPlayer.pause();
+backButton.addEventListener("click", () => {
+    iframePlayer.classList.add("hidden");
+    channelsGrid.classList.remove("hidden");
+    playerFrame.src = ""; // Stop the stream when going back
 });
 
 searchBar.addEventListener("input", (event) => {
